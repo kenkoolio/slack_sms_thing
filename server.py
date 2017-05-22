@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify
 from twilio.rest import Client
+from auth import sid, token
 import requests
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ def relay_sms():
     # body = incoming_message["body"]
     # #todo callback URL
     #
-    # client = Client(a_sid, auth_token)
+    # client = Client(sid, token)
     #
     # client.messages.create(
     #     to=to,
@@ -36,5 +37,5 @@ def relay_sms():
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port="80",
+        port=80,
         debug=True)
