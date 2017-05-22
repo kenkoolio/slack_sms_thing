@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from Flask import Flask, render_template, request, redirect, jsonify
 from twilio.rest import Client
 from auth import sid, token
 import requests
