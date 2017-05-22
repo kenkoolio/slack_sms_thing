@@ -32,7 +32,8 @@ def relay_sms():
 
     print("look here", incoming_message)
     # return render_template('index.html', message_data=incoming_message)
-    return '', 200
+    #return '', 200
+    return {'text':'response number red'}
 
 if __name__ == "__main__":
     app.run(debug=True)
