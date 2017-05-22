@@ -33,4 +33,8 @@ def relay_sms():
     # return render_template('index.html', message_data=incoming_message)
     return '', 200
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port="80",
+        debug=True)
