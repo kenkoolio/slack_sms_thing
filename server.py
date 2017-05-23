@@ -22,7 +22,6 @@ app.secret_key = 'secretsquirrel'
 #index
 @app.route('/')
 def index():
-
     return render_template('index.html')
 
 #relay sms from slack to phone
@@ -40,6 +39,13 @@ def relay_sms():
     message_text = incoming_message[11:]
     out_message = '{}: {}'.format(username, message_text)
     response_url = request.form.get("response_url")
+
+    #if user is asking for help
+    is_help = incoming_message[:4]
+    if isinstance(is_help, str) and is_help.lower() == 'help':
+        resp_text = 'Make sure the phone number is in the form xxxxxxxxxx (no parenthesis or dashes) followed by a space before your message'
+        resp = {"text": resp_text}
+        return json.dumps(resp), 200, {"Content_Type": "application/json"}
 
     #twilio API to send slack message to mobile phone
     twilio_number = "+14698047301"
