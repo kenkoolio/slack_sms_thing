@@ -7,7 +7,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = 'secretsquirrel'
 
-# The parameters included in a slash command request (with example values):
+# Slack: The parameters included in a slash command request (with example values):
 #   token=gIkuvaNzQIHg97ATvDxqgjtO
 #   team_id=T0001
 #   team_domain=example
@@ -58,19 +58,21 @@ def relay_sms():
     resp = {"text": "have a reply"}
     return jsonify(resp), 200, {"Content-Type": "application/json"}
 
+
+#Twilio request parameters
+# MessageSid	unique identifier for the message. May be used to later retrieve this message from the REST API.
+# SmsSid	Same value as MessageSid. Deprecated and included for backward compatibility.
+# AccountSid	The 34 character id of the Account this message is associated with.
+# MessagingServiceSid	The 34 character id of the Messaging Service associated to the message.
+# From	The phone number that sent this message.
+# To	The phone number of the recipient.
+# Body	The text body of the message. Up to 1600 characters long.
+# NumMedia	The number of media items associated with your message
+
 #when mobile phone sends a reply, use incoming_webhooks to send reply to slack channel
-        #Twilio request parameters
-        # MessageSid	A 34 character unique identifier for the message. May be used to later retrieve this message from the REST API.
-        # SmsSid	Same value as MessageSid. Deprecated and included for backward compatibility.
-        # AccountSid	The 34 character id of the Account this message is associated with.
-        # MessagingServiceSid	The 34 character id of the Messaging Service associated to the message.
-        # From	The phone number that sent this message.
-        # To	The phone number of the recipient.
-        # Body	The text body of the message. Up to 1600 characters long.
-        # NumMedia	The number of media items associated with your message
 @app.route('/smsreply', methods=['POST'])
 def reply_to_slack():
-    webhook_url = "https://hooks.slack.com/services/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"
+    webhook_url = "https://hooks.slack.com/services/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"
     request_body = request.form.to_dict()
     from_phone = request_body["From"]
     message_body = json.dumps(request_body["Body"])
@@ -78,7 +80,7 @@ def reply_to_slack():
 
     return_message = '{}: {}'.format(from_phone, message_body)
     return_body = {"text": return_message}
-    return_headers = '"Content-Type": "application/json"'
+    return_headers = {"Content-Type": "application/json"}
     requests.post(webhook_url, data = return_body, headers = return_headers)
     return "", 200
 
