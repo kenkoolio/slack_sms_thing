@@ -6,6 +6,18 @@ import requests
 app = Flask(__name__)
 app.secret_key = 'secretsquirrel'
 
+# The parameters included in a slash command request (with example values):
+#   token=gIkuvaNzQIHg97ATvDxqgjtO
+#   team_id=T0001
+#   team_domain=example
+#   channel_id=C2147483705
+#   channel_name=test
+#   user_id=U2147483697
+#   user_name=Steve
+#   command=/weather
+#   text=94070
+#   response_url=https://hooks.slack.com/commands/1234/5678
+
 #index
 @app.route('/')
 def index():
@@ -33,8 +45,9 @@ def relay_sms():
     print("look here", incoming_message)
     # return render_template('index.html', message_data=incoming_message)
     resp = {"text": "have a reply"}
-    return jsonify(resp), 200, {"Content-Type": "application/json"}
-    #return {'text':'response number red'}
+    reply = "Here, have a reply"
+    #return jsonify(resp), 200, {"Content-Type": "application/json"}
+    return reply
 
 if __name__ == "__main__":
     app.run(debug=True)
