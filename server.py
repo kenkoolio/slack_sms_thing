@@ -70,8 +70,8 @@ def relay_sms():
 @app.route('/smsreply', methods=['POST'])
 def reply_to_slack():
     webhook_url = "https://hooks.slack.com/services/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"
-    message_body = request.form.get("body")
-    print("from twilio:", message_body)
+    message_body = request.get_json(force=True)
+    print("from twilio:", message_body["Body"])
     return "", 200
 
 
