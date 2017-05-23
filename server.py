@@ -81,7 +81,7 @@ def reply_to_slack():
     return_message = '{}: {}'.format(from_phone, message_body)
     return_body = {"text": return_message}
     return_headers = {"Content-Type": "application/json"}
-    r = requests.post(webhook_url, data = return_body, headers = return_headers)
+    r = requests.post(webhook_url, data = json.dumps(return_body), headers = return_headers)
     print("slack webhook status:", r.status_code)
     return "", 200
 
