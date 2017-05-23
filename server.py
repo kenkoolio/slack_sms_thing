@@ -28,8 +28,8 @@ def index():
 @app.route('/smsout', methods=['POST'])
 def relay_sms():
     twilio_number = "+14698047301"
-    incoming_message = request.get_json(force=True)
-
+    #incoming_message = request.get_json(force=True)
+    incoming_message = request.form.get("test")
     # to = "+1"+incoming_message["to"]
     # from_ = twilio_number
     # body = incoming_message["body"]
