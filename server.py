@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, abort
+from flask import Flask, render_template, request, abort
 from twilio.rest import Client
 from auth import sid, twilio_token, slack_token
 import json
@@ -46,8 +46,8 @@ def relay_sms():
     to = "+1"+out_number
     from_ = twilio_number
     body = out_message
-    #todo callback URL
 
+    #twilio methods
     client = Client(sid, twilio_token)
 
     client.messages.create(
@@ -56,18 +56,18 @@ def relay_sms():
         body=body)
 
     resp = {"text": "have a reply"}
-    return jsonify(resp), 200, {"Content-Type": "application/json"}
+    return json.dumps(resp), 200, {"Content-Type": "application/json"}
 
 
 #Twilio request parameters
-# MessageSid	unique identifier for the message. May be used to later retrieve this message from the REST API.
-# SmsSid	Same value as MessageSid. Deprecated and included for backward compatibility.
-# AccountSid	The 34 character id of the Account this message is associated with.
-# MessagingServiceSid	The 34 character id of the Messaging Service associated to the message.
-# From	The phone number that sent this message.
-# To	The phone number of the recipient.
-# Body	The text body of the message. Up to 1600 characters long.
-# NumMedia	The number of media items associated with your message
+#   MessageSid = unique identifier for the message. May be used to later retrieve this message from the REST API.
+#   SmsSid = Same value as MessageSid. Deprecated and included for backward compatibility.
+#   AccountSid = The 34 character id of the Account this message is associated with.
+#   MessagingServiceSid = The 34 character id of the Messaging Service associated to the message.
+#   From = The phone number that sent this message.
+#   To = The phone number of the recipient.
+#   Body = The text body of the message. Up to 1600 characters long.
+#   NumMedia = The number of media items associated with your message
 
 #when mobile phone sends a reply, use incoming_webhooks to send reply to slack channel
 @app.route('/smsreply', methods=['POST'])
@@ -75,13 +75,13 @@ def reply_to_slack():
     webhook_url = "https://hooks.slack.com/services/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"
     request_body = request.form.to_dict()
     from_phone = request_body["From"]
-    message_body = json.dumps(request_body["Body"])
-    print("from twilio:", from_phone, message_body)
+    message_body = request_body["Body"]
+    #print("from twilio:", from_phone, message_body)
 
     return_message = '{}: {}'.format(from_phone, message_body)
     return_body = {"text": return_message}
     return_headers = {"Content-Type": "application/json"}
-    r = requests.post(webhook_url, data = json.dumps(return_body), headers = return_headers)
+    r = requests.post(url = webhook_url, data = json.dumps(return_body), headers = return_headers)
     print("slack webhook status:", r.status_code)
     return "", 200
 
