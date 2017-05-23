@@ -45,7 +45,7 @@ def relay_sms():
     if is_help.lower() == 'help':
         resp_text = 'Make sure the phone number is in the form xxxxxxxxxx (no parenthesis or dashes) followed by a space before your message'
         resp = {"text": resp_text}
-        return json.dumps(resp), 200, {"Content_Type": "application/json"}
+        return json.dumps(resp), 200, {"Content-Type": "application/json"}
 
     #twilio API to send slack message to mobile phone
     twilio_number = "+14698047301"
