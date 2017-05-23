@@ -32,11 +32,8 @@ def relay_sms():
     if not slack_verify_token == slack_token:
         abort(400)
 
-    #incoming_message = request.get_json(force=True)
-
     #incoming slack data
     incoming_message = request.form.get("text")
-
     out_number = incoming_message[:10]
     out_message = incoming_message[11:]
 
@@ -54,10 +51,7 @@ def relay_sms():
         from_=from_,
         body=body)
 
-    print("look here", incoming_message, slack_token)
-    # return render_template('index.html', message_data=incoming_message)
     resp = {"text": "have a reply"}
-
     return jsonify(resp), 200, {"Content-Type": "application/json"}
 
 
