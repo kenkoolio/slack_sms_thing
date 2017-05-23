@@ -55,7 +55,8 @@ def relay_sms():
         from_=from_,
         body=body)
 
-    resp = {"text": "have a reply"}
+    resp_text = '{} to {}: {}'.format(username, out_number, message_text)
+    resp = {"text": resp_text}
     return json.dumps(resp), 200, {"Content-Type": "application/json"}
 
 
