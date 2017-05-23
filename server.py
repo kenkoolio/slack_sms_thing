@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, abort
 from twilio.rest import Client
 from auth import sid, twilio_token, slack_token
-from xml.etree import ElementTree
+import json
 import requests
 
 app = Flask(__name__)
@@ -71,10 +71,11 @@ def relay_sms():
 @app.route('/smsreply', methods=['POST'])
 def reply_to_slack():
     webhook_url = "https://hooks.slack.com/services/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"
-    request_body = jsonify(request.form.to_dict())
+    request_body = request.form.to_dict()
+    json_body = json.dumps(request_body)
     # from_phone = request_body["From"]
     # message_body = request_body["Body"]
-    print("from twilio:", request_body)
+    print("from twilio:", json_body)
     return "", 200
 
 
