@@ -72,10 +72,14 @@ def relay_sms():
 def reply_to_slack():
     webhook_url = "https://hooks.slack.com/services/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"
     request_body = request.form.to_dict()
-    json_body = json.dumps(request_body)
-    from_phone = json_body["From"]
-    message_body = json_body["Body"]
+    from_phone = json.dumps(request_body["From"])
+    message_body = json.dumps(request_body["Body"])
     print("from twilio:", from_phone, message_body)
+
+    return_message = '{}: {}'.format(from_phone, message_body)
+    return_body = {"text": return_message}
+    return_headers = {"Content-Type": "application/json"}
+    requests.post(url = webhook_url, data = return_body, headers = return_headers)
     return "", 200
 
 
