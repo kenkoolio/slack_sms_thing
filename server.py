@@ -32,6 +32,7 @@ def relay_sms():
 
 
     incoming_message = request.form.get("text")
+    slack_token = request.form.get("token")
 
     # to = "+1"+incoming_message["to"]
     # from_ = twilio_number
@@ -45,12 +46,12 @@ def relay_sms():
     #     from_=from_,
     #     body=body)
 
-    print("look here", incoming_message)
+    print("look here", incoming_message, slack_token)
     # return render_template('index.html', message_data=incoming_message)
     resp = {"text": "have a reply"}
-    reply = "Here, have a reply"
+
     return jsonify(resp), 200, {"Content-Type": "application/json"}
-    #return reply
+
 
 if __name__ == "__main__":
     app.run(debug=True)
