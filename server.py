@@ -79,7 +79,7 @@ def reply_to_slack():
     message_body = request_body["Body"]
     #print("from twilio:", from_phone, message_body)
 
-    return_message = '{}: {}'.format(from_phone, message_body)
+    return_message = 'Reply from {}: {}'.format(from_phone, message_body)
     return_body = {"text": return_message}
     return_headers = {"Content-Type": "application/json"}
     r = requests.post(url = webhook_url, data = json.dumps(return_body), headers = return_headers)
