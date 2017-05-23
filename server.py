@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, abort
 from twilio.rest import Client
 from auth import sid, token
 import requests
@@ -32,7 +32,8 @@ def relay_sms():
 
     print("look here", incoming_message)
     # return render_template('index.html', message_data=incoming_message)
-    return ('', 200)
+    resp = {"text": "have a reply"}
+    return jsonify(resp), 200, {"Content-Type": "application/json"}
     #return {'text':'response number red'}
 
 if __name__ == "__main__":
