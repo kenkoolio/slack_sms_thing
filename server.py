@@ -36,6 +36,8 @@ def relay_sms():
     incoming_message = request.form.get("text")
     out_number = incoming_message[:10]
     out_message = incoming_message[11:]
+    response_url = request.form.get("response_url")
+    print("lookie here", response_url)
 
     #twilio API to send slack message to mobile phone
     twilio_number = "+14698047301"
@@ -53,6 +55,11 @@ def relay_sms():
 
     resp = {"text": "have a reply"}
     return jsonify(resp), 200, {"Content-Type": "application/json"}
+
+#when mobile phone sends a reply, use incoming_webhooks to send reply to slack channel
+@app.route('/smsreply', methods=['POST'])
+def reply_to_slack():
+    pass
 
 
 if __name__ == "__main__":
