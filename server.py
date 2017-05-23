@@ -79,7 +79,7 @@ def reply_to_slack():
     return_message = '{}: {}'.format(from_phone, message_body)
     return_body = {"text": return_message}
     return_headers = {"Content-Type": "application/json"}
-    requests.post(url = webhook_url, data = return_body, headers = return_headers)
+    requests.post(webhook_url, data = return_body, headers = return_headers)
     return "", 200
 
 
