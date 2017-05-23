@@ -29,7 +29,10 @@ def index():
 def relay_sms():
     twilio_number = "+14698047301"
     #incoming_message = request.get_json(force=True)
-    incoming_message = request.form.get("test")
+
+
+    incoming_message = request.form.get("text")
+
     # to = "+1"+incoming_message["to"]
     # from_ = twilio_number
     # body = incoming_message["body"]
@@ -46,8 +49,8 @@ def relay_sms():
     # return render_template('index.html', message_data=incoming_message)
     resp = {"text": "have a reply"}
     reply = "Here, have a reply"
-    #return jsonify(resp), 200, {"Content-Type": "application/json"}
-    return reply
+    return jsonify(resp), 200, {"Content-Type": "application/json"}
+    #return reply
 
 if __name__ == "__main__":
     app.run(debug=True)
