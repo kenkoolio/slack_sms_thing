@@ -32,6 +32,10 @@ def relay_sms():
     if not slack_verify_token == slack_token:
         abort(400)
 
+    #incoming slack data
+    username = request.form.get("user_name")
+    incoming_message = request.form.get("text")
+
     #if user is asking for help
     is_help = incoming_message[:4]
     if is_help.lower() == 'help':
@@ -39,9 +43,7 @@ def relay_sms():
         resp = {"text": resp_text}
         return json.dumps(resp), 200, {"Content-Type": "application/json"}
 
-    #incoming slack data
-    username = request.form.get("user_name")
-    incoming_message = request.form.get("text")
+    #message formatting
     out_number = incoming_message[:10]
     message_text = incoming_message[11:]
     out_message = '{}: {}'.format(username, message_text)
