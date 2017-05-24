@@ -32,20 +32,19 @@ def relay_sms():
     if not slack_verify_token == slack_token:
         abort(400)
 
-    #incoming slack data
-    username = request.form.get("user_name")
-    incoming_message = request.form.get("text")
-    out_number = incoming_message[:10]
-    message_text = incoming_message[11:]
-    out_message = '{}: {}'.format(username, message_text)
-    response_url = request.form.get("response_url")
-
     #if user is asking for help
     is_help = incoming_message[:4]
     if is_help.lower() == 'help':
         resp_text = 'Make sure the phone number is in the form xxxxxxxxxx (no parentheses or dashes) followed by a space before your message. Example: "/smsout 5556667777 cheerio!"'
         resp = {"text": resp_text}
         return json.dumps(resp), 200, {"Content-Type": "application/json"}
+
+    #incoming slack data
+    username = request.form.get("user_name")
+    incoming_message = request.form.get("text")
+    out_number = incoming_message[:10]
+    message_text = incoming_message[11:]
+    out_message = '{}: {}'.format(username, message_text)
 
     #twilio API to send slack message to mobile phone
     twilio_number = "+14698047301"
