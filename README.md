@@ -14,6 +14,7 @@ How to use
   - In the #general channel of the slack team:
     - Send messages to mobile phone using the slash command "/smsout" followed by 10-digit phone number (excluding parentheses and dashes) followed by your message (spaces in between of course).
     - The mobile phone user can simply send a reply and it will appear on the Slack #general channel
+    - Structure: "/smsout [phone number] [message]"
     - Example: "/smsout 5555555555 cheerio!" 
     
   - Type "/smsout help" for tips
